@@ -1,0 +1,65 @@
+pr_review_mode:
+  description: "Enhance PR reviews with automated checks for code quality and architectural patterns"
+  prompt: |
+    I'll help you perform a comprehensive review of a pull request with automated checks for:
+    
+    1. Code quality issues
+    2. Architectural pattern adherence
+    3. Naming conventions
+    4. Common coding issues
+    5. Applicable Cursor rules
+    
+    This workflow combines multiple checks to provide a thorough analysis of the PR.
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the pr_review_enhancer.py script"
+      command: "./scripts/phase2/pr_review_enhancer.py --base-ref {base_ref} --head-ref {head_ref} --output-file {output_file}"
+      parameters:
+        base_ref:
+          type: "string"
+          description: "Base reference (e.g., main)"
+          required: true
+        head_ref:
+          type: "string"
+          description: "Head reference (e.g., feature-branch)"
+          required: true
+        output_file:
+          type: "string"
+          description: "Output file for the review report (defaults to stdout)"
+          required: false
+
+architecture_check_mode:
+  description: "Check architectural pattern adherence in code changes"
+  prompt: |
+    I'll help you verify that code changes adhere to architectural patterns.
+    
+    This workflow will:
+    1. Analyze files changed between two Git references
+    2. Check for adherence to layered architecture patterns
+    3. Verify microservice boundaries are respected
+    4. Validate event-driven architecture patterns
+    5. Generate a report with any violations
+    
+    This helps maintain architectural integrity across the codebase.
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the architecture_pattern_checker.py script"
+      command: "./scripts/phase2/architecture_pattern_checker.py --base-ref {base_ref} --head-ref {head_ref} --output {output_format}"
+      parameters:
+        base_ref:
+          type: "string"
+          description: "Base reference (e.g., main)"
+          required: true
+        head_ref:
+          type: "string"
+          description: "Head reference (e.g., feature-branch)"
+          required: true
+        output_format:
+          type: "string"
+          description: "Output format (text or json)"
+          required: false
+          default: "text"

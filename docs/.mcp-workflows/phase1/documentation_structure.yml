@@ -1,0 +1,37 @@
+documentation_structure_mode:
+  description: "Navigate and understand the refined documentation structure"
+  prompt: |
+    I'll help you navigate the refined documentation structure created during the SDLC streamlining project.
+    
+    The documentation has been organized into:
+    1. A visual navigation system with clear entry points
+    2. A comprehensive "Common Tasks" section for frequently needed information
+    3. Logical groupings of related documentation
+    4. Progressive disclosure of complex topics
+    
+    This structure makes it easier to find the information you need quickly.
+  toolMode: "situational"
+  tools: "fetch_documentation"
+  toolConfig:
+    fetch_documentation:
+      description: "Fetch the Documentation Structure Refinement guide"
+      command: "cat ./project/phase1/documentation_structure_refinement.md"
+
+work_item_templates_mode:
+  description: "Use simplified work item templates for Epics, Stories, and Tasks"
+  prompt: |
+    I'll help you understand and use the simplified work item templates created during the SDLC streamlining project.
+    
+    These templates:
+    1. Reduce the number of required fields at creation time
+    2. Use progressive disclosure to show additional fields as needed
+    3. Provide clear guidance on what information to include
+    4. Maintain consistency across different work item types
+    
+    This makes it easier to create and manage work items throughout the development lifecycle.
+  toolMode: "situational"
+  tools: "fetch_documentation"
+  toolConfig:
+    fetch_documentation:
+      description: "Fetch the Work Item Templates Simplification guide"
+      command: "cat ./project/phase1/work_item_templates_simplification.md"

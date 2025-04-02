@@ -1,0 +1,39 @@
+contributor_quick_start_mode:
+  description: "Guide for new contributors to get started quickly"
+  prompt: |
+    I'll help you understand how to get started as a contributor to this project.
+    
+    This guide covers:
+    1. Setting up your development environment
+    2. Understanding the project structure
+    3. Finding appropriate tasks to work on
+    4. Following the contribution workflow
+    5. Getting help when needed
+    
+    This is based on the Contributor Quick Start Guide created during the SDLC streamlining project.
+  toolMode: "situational"
+  tools: "fetch_documentation"
+  toolConfig:
+    fetch_documentation:
+      description: "Fetch the Contributor Quick Start Guide"
+      command: "cat ./project/phase1/contributor_quick_start_guide.md"
+
+ai_agent_onboarding_mode:
+  description: "Protocol for onboarding AI agents to the project"
+  prompt: |
+    I'll help you understand how to work with this project as an AI agent.
+    
+    This protocol covers:
+    1. Understanding the project's architecture and components
+    2. Accessing and interpreting documentation
+    3. Following coding standards and patterns
+    4. Using the appropriate workflows for different tasks
+    5. Interacting with human team members
+    
+    This is based on the AI Agent Onboarding Protocol created during the SDLC streamlining project.
+  toolMode: "situational"
+  tools: "fetch_documentation"
+  toolConfig:
+    fetch_documentation:
+      description: "Fetch the AI Agent Onboarding Protocol"
+      command: "cat ./project/phase1/ai_agent_onboarding_protocol.md"

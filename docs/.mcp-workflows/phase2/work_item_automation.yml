@@ -1,0 +1,63 @@
+work_item_creation_mode:
+  description: "Create Stories and Tasks from an Epic or PRD"
+  prompt: |
+    I'll help you create Stories and Tasks from an Epic or PRD document.
+    
+    First, I'll analyze the Epic to extract key requirements and scope items.
+    Then, I'll generate appropriate Stories based on these requirements.
+    Finally, I'll create implementation, testing, and documentation Tasks for each Story.
+    
+    Please provide the path to your Epic markdown file, or share the Epic content directly.
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the auto_work_item_creation.py script"
+      command: "./scripts/phase2/auto_work_item_creation.py {epic_file}"
+      parameters:
+        epic_file:
+          type: "string"
+          description: "Path to the Epic markdown file"
+          required: true
+
+commit_message_validation_mode:
+  description: "Validate commit messages against Conventional Commits standard and work item references"
+  prompt: |
+    I'll help you validate your commit messages to ensure they follow the Conventional Commits standard
+    and include references to Task/Story IDs.
+    
+    A valid commit message should:
+    1. Follow the format: <type>(<scope>): <description>
+    2. Include a reference to a work item (e.g., #PROJ-123 or #PROJ-EPIC-S1)
+    
+    Valid types include: feat, fix, docs, style, refactor, perf, test, build, ci, chore
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the commit_message_validator.py script"
+      command: "./scripts/phase2/commit_message_validator.py --check-last-commit"
+
+file_task_update_mode:
+  description: "Update Task descriptions with newly created files"
+  prompt: |
+    I'll help you update Task descriptions with references to newly created files.
+    
+    This workflow will:
+    1. Detect files changed in your working directory or since a specific commit
+    2. Categorize the files based on their type and location
+    3. Find the most relevant Task for each file
+    4. Update the Task description with a reference to the file
+    
+    You can run this after creating new files to keep your Tasks up-to-date.
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the file_task_updater.py script"
+      command: "./scripts/phase2/file_task_updater.py --working-dir"
+      parameters:
+        since_commit:
+          type: "string"
+          description: "Process files changed since the specified commit (optional)"
+          required: false

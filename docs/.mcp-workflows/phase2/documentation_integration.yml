@@ -1,0 +1,65 @@
+documentation_update_mode:
+  description: "Check for documentation updates needed when code changes"
+  prompt: |
+    I'll help you identify documentation that needs to be updated based on code changes.
+    
+    This workflow will:
+    1. Analyze files changed between two Git references
+    2. Identify which modules have been modified
+    3. Determine which documentation files are affected
+    4. Check if the affected documentation has been updated
+    5. Generate a report with recommendations
+    
+    This helps ensure documentation stays in sync with code changes.
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the documentation_update_checker.py script"
+      command: "./scripts/phase2/documentation_update_checker.py --base-ref {base_ref} --head-ref {head_ref}"
+      parameters:
+        base_ref:
+          type: "string"
+          description: "Base reference (e.g., main)"
+          required: true
+        head_ref:
+          type: "string"
+          description: "Head reference (e.g., feature-branch)"
+          required: true
+
+release_notes_generation_mode:
+  description: "Generate Release Notes from Conventional Commits"
+  prompt: |
+    I'll help you generate release notes from Conventional Commits in a release branch or tag.
+    
+    This workflow will:
+    1. Extract commits between two Git references
+    2. Parse commits according to Conventional Commits format
+    3. Categorize changes by type (features, bug fixes, etc.)
+    4. Generate formatted release notes with links to PRs and issues
+    5. Save the release notes to a file
+    
+    This automates the creation of comprehensive release documentation.
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the release_notes_generator.py script"
+      command: "./scripts/phase2/release_notes_generator.py --from {from_ref} --to {to_ref} --version {version} --output {output_file}"
+      parameters:
+        from_ref:
+          type: "string"
+          description: "Starting reference (e.g., v1.0.0)"
+          required: true
+        to_ref:
+          type: "string"
+          description: "Ending reference (e.g., v1.1.0 or HEAD)"
+          required: true
+        version:
+          type: "string"
+          description: "Version number for the release notes"
+          required: true
+        output_file:
+          type: "string"
+          description: "Output file (defaults to stdout)"
+          required: false

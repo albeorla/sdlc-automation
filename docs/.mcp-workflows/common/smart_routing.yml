@@ -1,0 +1,39 @@
+smart_routing_mode:
+  description: "Intelligently route to the appropriate workflow based on context"
+  prompt: |
+    I'll help you determine which workflow is most appropriate for your current task.
+    
+    Based on the context of your request, I'll suggest the most relevant workflow from:
+    
+    Phase 1 (Consolidation & Refinement):
+    - contributor_quick_start_mode: For new contributors getting started
+    - ai_agent_onboarding_mode: For AI agents working with the project
+    - documentation_structure_mode: For navigating documentation
+    - work_item_templates_mode: For creating work items
+    
+    Phase 2 (Automation & Integration):
+    - work_item_creation_mode: For creating Stories/Tasks from Epics
+    - commit_message_validation_mode: For validating commit messages
+    - file_task_update_mode: For updating Tasks with file references
+    - documentation_update_mode: For checking documentation updates
+    - release_notes_generation_mode: For generating Release Notes
+    - pr_review_mode: For comprehensive PR reviews
+    - architecture_check_mode: For checking architectural patterns
+    - roadmap_to_epic_mode: For converting Roadmap items to Epics
+    
+    I'll analyze your request and suggest the most appropriate workflow.
+  toolMode: "situational"
+  tools: "list_workflows, suggest_workflow"
+  toolConfig:
+    list_workflows:
+      description: "List all available workflows"
+      command: "find ./.mcp-workflows -name '*.yml' | xargs grep -l 'description:' | sort"
+    
+    suggest_workflow:
+      description: "Suggest the most appropriate workflow based on context"
+      command: "echo 'Based on your request, I recommend using the {workflow_name} workflow.'"
+      parameters:
+        workflow_name:
+          type: "string"
+          description: "Name of the recommended workflow"
+          required: true

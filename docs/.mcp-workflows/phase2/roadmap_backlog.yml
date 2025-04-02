@@ -1,0 +1,43 @@
+roadmap_to_epic_mode:
+  description: "Convert Roadmap items to Epics in the backlog"
+  prompt: |
+    I'll help you convert strategic Roadmap items into actionable Epics in your backlog.
+    
+    This workflow will:
+    1. List available Roadmap items
+    2. Guide you through selecting a Roadmap item to convert
+    3. Extract business value, strategic alignment, and scope from the Roadmap item
+    4. Generate success metrics based on the business value
+    5. Create a properly formatted Epic with all required information
+    
+    This bridges the gap between strategic planning and tactical execution.
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the roadmap_to_epic_tool.py script"
+      command: "./scripts/phase2/roadmap_to_epic_tool.py"
+
+roadmap_batch_conversion_mode:
+  description: "Convert multiple Roadmap items to Epics in batch mode"
+  prompt: |
+    I'll help you convert multiple Roadmap items to Epics in batch mode.
+    
+    This workflow will:
+    1. Process all Roadmap items or a specified subset
+    2. Extract key information from each Roadmap item
+    3. Generate properly formatted Epics with all required information
+    4. Provide a summary report of the conversion
+    
+    This is useful for quarterly planning or when refreshing the backlog from an updated Roadmap.
+  toolMode: "sequential"
+  tools: "python_script_executor"
+  toolConfig:
+    python_script_executor:
+      description: "Execute the roadmap_to_epic_tool.py script in batch mode"
+      command: "./scripts/phase2/roadmap_to_epic_tool.py --batch {roadmap_ids}"
+      parameters:
+        roadmap_ids:
+          type: "string"
+          description: "Comma-separated list of Roadmap IDs to process (optional, processes all if omitted)"
+          required: false
